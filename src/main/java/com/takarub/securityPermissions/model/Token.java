@@ -1,10 +1,15 @@
 package com.takarub.securityPermissions.model;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "token")
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+
 public class Token {
 
     @Id

@@ -66,7 +66,6 @@ public class AuthenticationService {
         String token = jwtService.generateToken(user);
 
         revokAllTokenByUser(user);
-
         saveUserToken(user,token);
 
         return AuthenticationResponse
@@ -83,11 +82,14 @@ public class AuthenticationService {
     private void revokAllTokenByUser(User user) {
         List<Token> validTokenListByUser =  tokenRepository.findAllTokensByUser(user.getId());
 
-        if (!validTokenListByUser.isEmpty()){
-            validTokenListByUser.forEach(
-                    token1->token1.setLoggedOut(true)
-            );
+        if(validTokenListByUser.isEmpty()) {
+            return;
         }
+
+        validTokenListByUser.forEach(t-> {
+            t.setLoggedOut(true);
+        });
+
         tokenRepository.saveAll(validTokenListByUser);
     }
 
